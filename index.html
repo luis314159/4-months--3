@@ -223,9 +223,13 @@
     /* Navigation dots */
     .gallery-nav {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
       margin-top: 16px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .gallery-dot {
@@ -423,6 +427,86 @@
     }
 
     /* ═══════════════════════════════════
+       NUESTRAS COSITAS
+    ═══════════════════════════════════ */
+    .things {
+      margin: 40px 0;
+      animation: fade-up .8s .95s ease both;
+    }
+
+    .things-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 5vw, 34px);
+      font-style: italic;
+      font-weight: 700;
+      color: var(--gold2);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .things-sub {
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(253,240,244,.6);
+      text-align: center;
+      max-width: 460px;
+      margin: 0 auto 26px;
+      line-height: 1.7;
+    }
+
+    .things-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .thing {
+      background: rgba(212,175,112,.06);
+      border: 1px solid rgba(212,175,112,.16);
+      border-radius: 14px;
+      padding: 18px 16px;
+      text-align: center;
+      transition: transform .3s ease, background .3s ease, border-color .3s ease;
+    }
+
+    .thing:hover {
+      transform: translateY(-4px);
+      background: rgba(226,104,127,.09);
+      border-color: rgba(226,104,127,.3);
+    }
+
+    .thing-icon {
+      font-size: 26px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .thing-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--blush);
+      margin-bottom: 4px;
+      line-height: 1.25;
+    }
+
+    .thing-note {
+      font-size: 13.5px;
+      color: rgba(253,240,244,.62);
+      line-height: 1.55;
+    }
+
+    .things-closing {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(24px, 5vw, 30px);
+      color: var(--rose2);
+      text-align: center;
+      margin-top: 28px;
+      line-height: 1.4;
+    }
+
+    /* ═══════════════════════════════════
        VERSE
     ═══════════════════════════════════ */
     .verse-block {
@@ -526,6 +610,10 @@
       .polaroid { padding: 8px 8px 36px; }
       .polaroid img { height: 220px; }
       .polaroid-stage { height: 340px; }
+      .thing { padding: 14px 12px; }
+      .thing-name { font-size: 16px; }
+      .thing-note { font-size: 12.5px; }
+      .things-grid { gap: 10px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -610,24 +698,33 @@
     <p class="card-eyebrow">✦ Una carta para ti</p>
     <div class="card-body">
       <p>
-        <em>Chaparrita</em>, no sé si los días pasan rápido o si el tiempo simplemente
-        se siente diferente cuando estás tú. Hoy se cumplen <strong>cuatro meses</strong>
-        desde que decidiste darme la oportunidad de estar a tu lado — y cada uno
-        de esos días ha sido un regalo que no me merezco, pero que recibo con
-        todo el corazón.
+        <em>Chaparrita chula</em>, hoy se cumplen <strong>cuatro meses</strong> desde que
+        me diste la oportunidad de estar a tu lado, y lo que más me sorprende
+        no son las cosas grandes — es lo chiquito. Es que un cafecito contigo
+        se me hace un plan entero. Que comer juntitos, aunque sea cualquier cosa,
+        sabe distinto. Que puedo estar horas nomás platicando contigo y se me va
+        el día sin sentirlo.
       </p>
       <p>
-        Estos cuatro meses me han enseñado lo que es querer de verdad. No el
-        amor de película, sino el que se construye en lo cotidiano: en tus
-        carcajadas inesperadas, en tus ojos cuando me regañas, en la paz que
-        siento cuando estamos juntos. <em>Contigo todo tiene más sentido.</em>
+        Me gusta ir al cine contigo aunque la película esté regular. Me gusta
+        dar la vuelta sin rumbo, nomás por andar juntos. Me gusta cuando
+        metemos los piecitos en el canalito y el mundo se queda quieto un rato.
+        Ninguna de esas cosas suena a mucho si las cuento — pero contigo
+        <em>todas se sienten especiales</em>, y creo que ese es tu don:
+        vuelves bonito lo simple.
       </p>
       <p>
-        Gracias por cada momento, por tu paciencia, por tu dulzura y por ser
-        tan tú. Por elegirme cada mañana. Por ser mi <strong>chaparrita chula</strong>
-        en el mejor sentido de esa palabra. No soy el hombre perfecto, pero
-        con el Señor de mi lado y tú junto a mí, quiero ser el mejor hombre
-        que puedo ser — para ti, para nosotros.
+        Y es por tu forma de ser. Eres <strong>linda y dulce</strong> hasta en los
+        detalles más pequeños, en cómo hablas, en cómo cuidas, en cómo te
+        emocionas por cosas chiquitas. A tu lado no necesito nada más ni ningún
+        lugar especial: el lugar eres tú.
+      </p>
+      <p>
+        Gracias por tu paciencia, por tu dulzura y por elegirme cada mañana.
+        No soy el hombre perfecto, pero con el Señor de mi lado y contigo junto
+        a mí, quiero ser el mejor hombre que puedo ser — para ti, para nosotros.
+        Y quiero seguir haciendo todo esto contigo: los cafecitos, las pláticas,
+        las vueltas, los canalitos, la vida entera.
       </p>
       <p>
         <em>Te quiero hoy, mañana y todos los días que Dios me dé vida para quererte.</em>
@@ -645,11 +742,11 @@
       <div class="reason-item">
         <div class="reason-num">1</div>
         <div class="reason-text-wrap">
-          <div class="reason-title-text">Tu forma de reírte</div>
+          <div class="reason-title-text">Tu forma de ser tan linda</div>
           <p class="reason-body">
-            Esa risa tuya que sale sin permiso y que te llena la cara entera.
-            Es la cosa más bonita que he visto, y cada vez que la escucho
-            siento que vale todo.
+            Esa dulzura tuya que se te sale sin querer — en cómo hablas, en
+            cómo te ríes, en cómo te emocionas por cositas chiquitas. Es lo
+            más bonito que he visto y no se finge, así eres tú.
           </p>
         </div>
       </div>
@@ -657,11 +754,11 @@
       <div class="reason-item">
         <div class="reason-num">2</div>
         <div class="reason-text-wrap">
-          <div class="reason-title-text">Tu corazón</div>
+          <div class="reason-title-text">Que haces especial lo simple</div>
           <p class="reason-body">
-            Eres de las personas más buenas que conozco, aunque no te lo
-            crean — o aunque tú no te lo creas. Cuidas a los que quieres
-            con una intensidad que admiro profundamente.
+            Un cafecito, un taco, una plática larga, dar la vuelta sin rumbo.
+            Contigo lo más sencillo se vuelve mi parte favorita del día.
+            Ese don no lo tiene cualquiera, chaparrita.
           </p>
         </div>
       </div>
@@ -671,9 +768,9 @@
         <div class="reason-text-wrap">
           <div class="reason-title-text">La paz que me das</div>
           <p class="reason-body">
-            Hay algo en estar contigo que simplemente calma todo el ruido.
-            No necesito nada más cuando tú estás cerca. Eso no es cualquier
-            cosa — eso es muy tuyo, muy especial.
+            Con los piecitos en el canalito o sentados sin hacer nada, contigo
+            se me calma todo el ruido. No necesito nada más cuando estás cerca:
+            no es el lugar, eres tú.
           </p>
         </div>
       </div>
@@ -683,13 +780,66 @@
         <div class="reason-text-wrap">
           <div class="reason-title-text">Que me eliges a mí</div>
           <p class="reason-body">
-            De entre todo y todos, cada día decides seguir aquí conmigo.
-            Eso es lo que más me importa. Gracias, Chaparrita. De verdad, gracias.
+            De entre todo y todos, cada día decides seguir aquí conmigo, y por
+            eso quiero seguir disfrutando todo lo que hacemos juntos.
+            Gracias, Chaparrita. De verdad, gracias.
           </p>
         </div>
       </div>
 
     </div>
+  </section>
+
+  <div class="divider"><span class="divider-heart">♥</span></div>
+
+  <!-- ═══════════ NUESTRAS COSITAS ═══════════ -->
+  <section class="things">
+    <h2 class="things-title">Nuestras cositas favoritas</h2>
+    <p class="things-sub">
+      Lo que quiero seguir haciendo contigo, una y otra vez, mil veces más.
+    </p>
+
+    <div class="things-grid">
+
+      <div class="thing">
+        <span class="thing-icon">☕</span>
+        <div class="thing-name">Ir por un cafecito</div>
+        <p class="thing-note">Sin prisa, nomás tú y yo y la plática que salga.</p>
+      </div>
+
+      <div class="thing">
+        <span class="thing-icon">🍽️</span>
+        <div class="thing-name">Comer juntitos</div>
+        <p class="thing-note">Lo que sea sabe mejor si estás enfrente de mí.</p>
+      </div>
+
+      <div class="thing">
+        <span class="thing-icon">💬</span>
+        <div class="thing-name">Puras pláticas</div>
+        <p class="thing-note">Horas hablando de todo y de nada. Mis favoritas.</p>
+      </div>
+
+      <div class="thing">
+        <span class="thing-icon">🎬</span>
+        <div class="thing-name">Ir al cine</div>
+        <p class="thing-note">Aunque la peli esté regular, contigo vale la pena.</p>
+      </div>
+
+      <div class="thing">
+        <span class="thing-icon">💧</span>
+        <div class="thing-name">Los piecitos en el canalito</div>
+        <p class="thing-note">El agüita fría y el mundo quietecito un ratito.</p>
+      </div>
+
+      <div class="thing">
+        <span class="thing-icon">🚗</span>
+        <div class="thing-name">Dar la vuelta</div>
+        <p class="thing-note">Sin rumbo y sin plan, nomás por andar contigo.</p>
+      </div>
+
+    </div>
+
+    <p class="things-closing">…y todo lo que nos falta por vivir ♥</p>
   </section>
 
   <div class="divider"><span class="divider-heart">♥</span></div>
@@ -727,12 +877,27 @@
    y los pies de foto que quieras mostrar.
    ─────────────────────────────────────────── */
 const PHOTOS = [
-  { src: 'image.jpeg',      caption: 'Tú y yo 🌹' },
-  { src: 'fotos/2.jpeg',    caption: 'Momentos contigo' },
-  { src: 'fotos/3.jpeg',    caption: 'Mis favoritos' },
-  { src: 'fotos/4.jpeg',    caption: '4 meses juntos ♥' },
-  // Agrega más líneas aquí:
-  // { src: 'fotos/5.jpeg', caption: 'Lo que quieras' },
+  { src: 'fotos/1.jpg', caption: 'Tú y yo 🌹' },
+  { src: 'fotos/PHOTO-2026-05-03-08-30-38.jpg', caption: 'Un cafecito contigo ☕' },
+  { src: 'fotos/PHOTO-2026-05-17-19-42-10.jpg', caption: 'Comer juntitos 🍽️' },
+  { src: 'fotos/PHOTO-2026-05-17-19-49-36_1.jpg', caption: 'Puras pláticas 💬' },
+  { src: 'fotos/PHOTO-2026-05-17-19-49-36_2.jpg', caption: 'Mi chaparrita chula' },
+  { src: 'fotos/PHOTO-2026-05-17-19-49-36_3.jpg', caption: 'Esa sonrisa tuya' },
+  { src: 'fotos/PHOTO-2026-05-17-19-49-36_4.jpg', caption: 'Lo simple contigo ♥' },
+  { src: 'fotos/PHOTO-2026-05-17-19-49-37.jpg', caption: 'Dando la vuelta, sin rumbo' },
+  { src: 'fotos/PHOTO-2026-05-17-19-53-18.jpg', caption: 'Contigo todo es especial' },
+  { src: 'fotos/PHOTO-2026-05-17-20-04-52.jpg', caption: 'Los piecitos en el canalito 💧' },
+  { src: 'fotos/PHOTO-2026-05-17-20-04-52_1.jpg', caption: 'El mundo quietecito' },
+  { src: 'fotos/PHOTO-2026-05-17-20-06-39.jpg', caption: 'Nomás por andar juntos' },
+  { src: 'fotos/PHOTO-2026-05-24-03-34-17.jpg', caption: 'Mis favoritos ✦' },
+  { src: 'fotos/PHOTO-2026-05-24-07-53-09.jpg', caption: 'Tú y yo otra vez' },
+  { src: 'fotos/IMG_1102.jpeg', caption: 'Para recordarlo siempre' },
+  { src: 'fotos/2dd2b2b9-e794-4cb6-a8d5-0ee43b3026ea.JPG', caption: 'Mi lugar favorito eres tú' },
+  { src: 'fotos/42f209a6-a00d-4a57-b8d5-e186c4873369.JPG', caption: 'Momentitos nuestros' },
+  { src: 'fotos/50ad2836-b701-48bf-a500-5262282d22ba.JPG', caption: 'Tu forma de ser tan linda' },
+  { src: 'fotos/b4aba6b9-2e2c-4576-82a5-646ffb01e8f8_EAF3E606-451B-4ADA-8DD5-D528E7FAAA7A.JPG', caption: 'Cuatro meses contigo' },
+  { src: 'fotos/ccea88ef-bcc0-4c7b-b191-f910077df37c.JPG', caption: 'Y los que faltan ♥' },
+  { src: 'fotos/f3e0f256-f29b-47e7-abdb-f23dfe22f1cb.JPG', caption: 'Te quiero, Bonita 🌹' },
 ];
 
 /* Rotaciones de polaroid (alterna para efecto natural) */
@@ -751,6 +916,8 @@ PHOTOS.forEach((p, i) => {
   const img = document.createElement('img');
   img.src = p.src;
   img.alt = p.caption;
+  img.decoding = 'async';
+  if (i > 0) img.loading = 'lazy';
   img.onerror = () => {
     /* Fallback gradient when image not found */
     img.style.display = 'none';
