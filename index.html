@@ -3,9 +3,20 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>4 Meses Contigo, Amor 🌹</title>
+  <meta name="color-scheme" content="dark"/>
+  <meta name="theme-color" content="#050713"/>
+  <title>4 Meses Contigo, Amor 🌷</title>
+
+  <meta name="description" content="Cuatro meses contigo, chaparrita. Una carta, nuestros recuerdos y nuestra canción."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="4 Meses Contigo, Amor 🌷"/>
+  <meta property="og:description" content="Una carta, nuestros recuerdos y nuestra canción."/>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='88'>🌷</text></svg>"/>
 
   <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lora:ital,wght@0,400;0,500;1,400&family=Great+Vibes&display=swap" rel="stylesheet"/>
 
   <style>
@@ -13,28 +24,87 @@
        TOKENS
     ═══════════════════════════════════ */
     :root {
-      --midnight: #07091B;
-      --indigo:   #11163A;
+      /* ── Fondos: tres capas de profundidad ── */
+      --midnight: #050713;
+      --indigo:   #0E1330;
+      --surface:  rgba(18,23,54,.55);
+
+      /* ── Oro ── */
       --gold:     #D4AF70;
-      --gold2:    #F0D090;
+      --gold2:    #F4DCA8;
+      --gold-dim: #8F6F3F;
+
+      /* ── Rosa (tulipanes y gerberas) ── */
       --rose:     #E2687F;
-      --rose2:    #F4A0B0;
-      --blush:    #FDF0F4;
+      --rose2:    #F5AEBC;
+
+      /* ── Texto: una sola familia en tres pesos ópticos ── */
+      --blush:    #F5ECEF;
+      --text-2:   rgba(245,236,239,.74);
+      --text-3:   rgba(245,236,239,.46);
       --silver:   #9BACD4;
       --ink:      #1A1228;
+
+      /* ── Líneas ── */
+      --line:     rgba(212,175,112,.14);
+      --line-2:   rgba(212,175,112,.30);
       --mist:     rgba(212,175,112,.45);
+
+      /* ── Escala de espaciado (múltiplos de 8) ── */
+      --s-1: 8px;  --s-2: 16px; --s-3: 24px;
+      --s-4: 32px; --s-5: 48px; --s-6: 64px; --s-7: 88px;
+
+      /* ── Curvas ── */
+      --ease:     cubic-bezier(.22,1,.36,1);
+      --ease-soft: cubic-bezier(.4,0,.2,1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
 
     body {
-      background: var(--midnight);
+      /* Un degradado larguísimo en vez de un color plano: da profundidad */
+      background:
+        radial-gradient(1200px 700px at 50% -8%, #131A3E 0%, transparent 62%),
+        var(--midnight);
+      background-attachment: fixed;
       font-family: 'Lora', Georgia, serif;
+      font-size: 17px;
       color: var(--blush);
       min-height: 100vh;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Los títulos nunca deben partirse feo */
+    h1, h2, h3, .big-label, .sec-title, .verse-text {
+      text-wrap: balance;
+    }
+    p { text-wrap: pretty; }
+
+    ::selection { background: rgba(226,104,127,.32); color: #fff; }
+
+    /* Barra de desplazamiento discreta, a tono */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--midnight); }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(212,175,112,.22);
+      border-radius: 99px;
+      border: 3px solid var(--midnight);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(212,175,112,.4); }
+
+    /* Foco visible y elegante para quien navegue con teclado */
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 4px;
     }
 
     /* ═══════════════════════════════════
@@ -55,73 +125,120 @@
       z-index: 1;
       max-width: 660px;
       margin: 0 auto;
-      padding: 40px 20px 80px;
+      padding: var(--s-4) var(--s-3) var(--s-7);
     }
 
+    /* La página entra completa cuando ya cargaron las tipografías:
+       así nadie ve el brinco de fuentes al abrir. */
+    body { opacity: 0; transition: opacity .6s var(--ease-soft); }
+    body.ready { opacity: 1; }
+
     /* ═══════════════════════════════════
-       HERO — BIG NUMBER + ROSE
+       HERO
     ═══════════════════════════════════ */
     .hero {
       text-align: center;
-      padding: 60px 0 20px;
+      padding: var(--s-6) 0 var(--s-3);
       position: relative;
     }
 
-    /* Moon-glow behind number */
+    /* Luz de luna detrás del número — grande y suave, no un foco */
     .hero::before {
       content: '';
       position: absolute;
-      top: 30px; left: 50%;
+      top: -40px; left: 50%;
       transform: translateX(-50%);
-      width: 260px; height: 260px;
-      background: radial-gradient(circle, rgba(212,175,112,.15) 0%, transparent 70%);
-      border-radius: 50%;
+      width: 520px; height: 420px;
+      max-width: 130vw;
+      background:
+        radial-gradient(closest-side, rgba(212,175,112,.13), transparent 72%),
+        radial-gradient(closest-side, rgba(226,104,127,.07), transparent 78%);
       pointer-events: none;
-      animation: glow-pulse 4s ease-in-out infinite;
+      animation: glow-pulse 9s ease-in-out infinite;
     }
 
     @keyframes glow-pulse {
-      0%,100% { opacity:.7; transform:translateX(-50%) scale(1); }
-      50%      { opacity:1;  transform:translateX(-50%) scale(1.08); }
+      0%,100% { opacity:.75; }
+      50%     { opacity:1;   }
+    }
+
+    .hero-mark {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .5em;
+      color: var(--gold-dim);
+      margin-bottom: var(--s-2);
+      animation: fade-up .9s .1s var(--ease) both;
     }
 
     .big-number {
+      display: block;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(130px, 28vw, 200px);
+      font-size: clamp(128px, 26vw, 196px);
       font-weight: 700;
       font-style: italic;
       color: transparent;
-      background: linear-gradient(160deg, #F0D090 0%, #D4AF70 40%, #A07840 80%);
+      background: linear-gradient(168deg, #FBEAC4 0%, #E0BC85 32%, #C69B5B 58%, #8A6836 100%);
       -webkit-background-clip: text;
       background-clip: text;
-      line-height: 1;
+      line-height: .92;
+      letter-spacing: -.02em;
       position: relative;
       z-index: 1;
-      animation: number-drop .9s cubic-bezier(.16,1,.3,1) both;
+      animation: number-drop 1.1s var(--ease) both;
     }
 
     @keyframes number-drop {
-      from { opacity:0; transform:translateY(-40px) scale(.85); }
+      from { opacity:0; transform:translateY(-34px) scale(.88); }
       to   { opacity:1; transform:translateY(0) scale(1); }
     }
 
+    /* La etiqueta entre dos filetes: tratamiento de portada */
     .big-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(12px, 3vw, 22px);
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(22px, 5vw, 34px);
+      font-size: clamp(20px, 4.4vw, 30px);
       font-style: italic;
       font-weight: 400;
       color: var(--rose2);
-      letter-spacing: .04em;
-      margin-top: -12px;
+      letter-spacing: .03em;
+      margin-top: var(--s-1);
       position: relative; z-index: 1;
-      animation: fade-up .8s .3s ease both;
+      animation: fade-up .9s .35s var(--ease) both;
     }
 
-    /* SVG Rose */
-    .rose-wrap {
-      margin: 28px auto 0;
-      width: 90px; height: 90px;
+    .big-label::before,
+    .big-label::after {
+      content: '';
+      height: 1px;
+      width: clamp(26px, 12vw, 82px);
+      background: linear-gradient(to right, transparent, var(--line-2));
+    }
+
+    .big-label::after {
+      background: linear-gradient(to left, transparent, var(--line-2));
+    }
+
+    /* Ramito: tulipán + gerberas rosas */
+    .flores-wrap {
+      margin: 26px auto 0;
+      width: 128px; height: 128px;
       animation: fade-up .8s .5s ease both;
+    }
+
+    .flores-wrap svg {
+      width: 100%; height: 100%;
+      transform-origin: 50% 94%;
+      animation: mecer 6.5s ease-in-out infinite;
+    }
+
+    /* Se mecen como con airecito */
+    @keyframes mecer {
+      0%, 100% { transform: rotate(-2.5deg); }
+      50%      { transform: rotate(2.5deg);  }
     }
 
     /* ═══════════════════════════════════
@@ -129,147 +246,273 @@
     ═══════════════════════════════════ */
     .names {
       text-align: center;
-      margin: 30px 0;
-      animation: fade-up .8s .6s ease both;
+      margin: var(--s-4) 0 var(--s-2);
+      animation: fade-up .9s .6s var(--ease) both;
     }
 
+    /* Membrete: chiquito y en versalitas, para que no compita con la dedicatoria */
     .names .from {
-      font-family: 'Great Vibes', cursive;
-      font-size: 28px;
-      color: var(--gold2);
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: var(--s-2);
     }
 
     .names .to {
-      font-family: 'Great Vibes', cursive;
-      font-size: 38px;
-      color: var(--rose2);
       display: block;
-      line-height: 1.2;
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(34px, 8vw, 46px);
+      color: var(--rose2);
+      line-height: 1.15;
     }
 
     .names .date-line {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 14px;
-      letter-spacing: .22em;
+      font-size: 12px;
+      letter-spacing: .34em;
       text-transform: uppercase;
-      color: var(--silver);
-      margin-top: 10px;
+      color: var(--text-3);
+      margin-top: var(--s-2);
+    }
+
+    .names .date-line::before,
+    .names .date-line::after {
+      content: '';
+      width: 30px; height: 1px;
+      background: var(--line-2);
     }
 
     /* ═══════════════════════════════════
-       PHOTO SLIDESHOW
+       COLLAGE DE RECUERDOS
+       (se sale del ancho de la carta)
     ═══════════════════════════════════ */
     .gallery-section {
-      margin: 40px 0;
-      animation: fade-up .8s .7s ease both;
+      margin: 48px 0 44px;
+      width: min(94vw, 1020px);
+      margin-left: calc(50% - min(47vw, 510px));
     }
 
-    .gallery-label {
+    /* ─── Encabezado de sección (mismo tratamiento en toda la página) ─── */
+    .gallery-label,
+    .song-label,
+    .card-eyebrow {
       font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 14px;
-      letter-spacing: .18em;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: .34em;
       text-transform: uppercase;
-      color: var(--mist);
-      text-align: center;
-      margin-bottom: 16px;
+      color: var(--gold-dim);
     }
 
-    .polaroid-stage {
-      position: relative;
-      height: 420px;
+    .gallery-label, .song-label { text-align: center; }
+    .gallery-label { margin-bottom: var(--s-1); }
+    .card-eyebrow  { margin-bottom: var(--s-3); }
+
+    .gallery-hint {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--text-3);
+      text-align: center;
+      margin-bottom: var(--s-3);
+    }
+
+    /* Columnas balanceadas: cada foto conserva su proporción real,
+       nada se recorta y no quedan huecos al final. */
+    .collage {
       display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .col {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tile {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      background: var(--indigo);
+      border: 1px solid rgba(212,175,112,.16);
+      box-shadow: 0 6px 22px rgba(0,0,0,.45);
+      cursor: pointer;
+      padding: 0;
+      opacity: 0;
+      transform: translateY(28px) scale(.95);
+      transition:
+        opacity .85s cubic-bezier(.16,1,.3,1),
+        transform .85s cubic-bezier(.16,1,.3,1),
+        box-shadow .45s ease,
+        border-color .45s ease;
+    }
+
+    .tile.in { opacity: 1; transform: translateY(0) scale(1); }
+
+    .tile img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: saturate(.92) brightness(.93);
+      transition: filter .5s ease;
+      animation: breathe 26s ease-in-out infinite alternate;
+    }
+
+    /* Zoom lentísimo, apenas se nota — hace que el collage "respire" */
+    @keyframes breathe {
+      from { transform: scale(1);    }
+      to   { transform: scale(1.07); }
+    }
+
+    .tile-cap {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 34px 11px 12px;
+      background: linear-gradient(to top,
+        rgba(5,7,19,.95) 0%, rgba(5,7,19,.62) 52%, transparent 100%);
+      font-family: 'Great Vibes', cursive;
+      font-size: 18px;
+      line-height: 1.22;
+      color: var(--blush);
+      text-shadow: 0 1px 6px rgba(0,0,0,.8);
+      text-align: center;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .4s var(--ease-soft), transform .4s var(--ease);
+    }
+
+    /* Marco interior de oro al pasar el cursor */
+    .tile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(244,220,168,0);
+      transition: box-shadow .4s var(--ease-soft);
+      pointer-events: none;
+    }
+
+    .tile.in:hover,
+    .tile.in:focus-visible {
+      transform: translateY(-6px) scale(1.012);
+      box-shadow: 0 18px 46px rgba(0,0,0,.65);
+      border-color: var(--line-2);
+      outline: none;
+    }
+
+    .tile:hover::after,
+    .tile:focus-visible::after {
+      box-shadow: inset 0 0 0 1px rgba(244,220,168,.34);
+    }
+
+    .tile:hover img,
+    .tile:focus-visible img { filter: saturate(1.06) brightness(1.06); }
+
+    .tile:hover .tile-cap,
+    .tile:focus-visible .tile-cap { opacity: 1; transform: translateY(0); }
+
+    /* En celular no hay hover: los pies de foto siempre visibles */
+    @media (hover: none) {
+      .tile-cap { opacity: .96; transform: none; font-size: 15px; }
+    }
+
+    /* ═══════════════════════════════════
+       VISOR GRANDE (POLAROID)
+    ═══════════════════════════════════ */
+    .lb {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
       align-items: center;
       justify-content: center;
+      padding: 20px 14px;
+      background: rgba(4,5,16,.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
-    .polaroid {
-      position: absolute;
+    .lb.open { display: flex; animation: lb-fade .3s ease both; }
+
+    @keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+
+    .lb-frame {
       background: #fff;
-      padding: 12px 12px 44px;
-      box-shadow:
-        0 8px 32px rgba(0,0,0,.55),
-        0 2px 8px rgba(0,0,0,.3);
-      transition: opacity .8s ease, transform .8s ease;
-      opacity: 0;
-      transform: rotate(var(--rot, 0deg)) scale(.93);
-      pointer-events: none;
-      max-width: 300px;
-      width: 85%;
+      padding: 13px 13px 16px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.75);
+      max-width: min(92vw, 560px);
+      animation: lb-pop .45s cubic-bezier(.16,1,.3,1) both;
     }
 
-    .polaroid.active {
-      opacity: 1;
-      transform: rotate(var(--rot, 0deg)) scale(1);
-      pointer-events: auto;
+    @keyframes lb-pop {
+      from { opacity: 0; transform: scale(.9) rotate(-1.5deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
     }
 
-    .polaroid img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
+    .lb-frame img {
       display: block;
+      width: 100%;
+      max-height: 66vh;
+      object-fit: contain;
+      background: #14161f;
     }
 
-    .polaroid .caption {
+    .lb-cap {
       font-family: 'Great Vibes', cursive;
-      font-size: 20px;
+      font-size: clamp(22px, 5vw, 30px);
       color: #2B1F14;
       text-align: center;
-      padding-top: 10px;
-      line-height: 1.3;
+      padding: 14px 6px 4px;
+      line-height: 1.25;
     }
 
-    /* Navigation dots */
-    .gallery-nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 16px;
-      max-width: 320px;
-      margin-left: auto;
-      margin-right: auto;
+    .lb-count {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: .22em;
+      color: #9A8B7A;
+      text-align: center;
     }
 
-    .gallery-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(212,175,112,.25);
-      border: 1px solid var(--gold);
-      cursor: pointer;
-      transition: background .3s, transform .3s;
-    }
-
-    .gallery-dot.active {
-      background: var(--gold);
-      transform: scale(1.3);
-    }
-
-    .gallery-arrows {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 14px;
-    }
-
-    .gallery-btn {
-      background: rgba(212,175,112,.1);
-      border: 1px solid rgba(212,175,112,.3);
-      color: var(--gold);
-      width: 38px; height: 38px;
+    .lb-btn {
+      position: absolute;
+      background: rgba(212,175,112,.12);
+      border: 1px solid rgba(212,175,112,.35);
+      color: var(--gold2);
+      width: 46px; height: 46px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background .3s, transform .2s;
+      transition: background .25s ease, transform .2s ease;
+      backdrop-filter: blur(4px);
     }
 
-    .gallery-btn:hover {
-      background: rgba(212,175,112,.2);
-      transform: scale(1.1);
+    .lb-btn:hover { background: rgba(226,104,127,.25); transform: scale(1.1); }
+
+    .lb-prev  { left: 14px;  top: 50%; margin-top: -23px; }
+    .lb-next  { right: 14px; top: 50%; margin-top: -23px; }
+    .lb-close { top: 16px; right: 16px; width: 40px; height: 40px; font-size: 17px; }
+
+    @media (max-width: 560px) {
+      .lb-prev  { left: 8px;  }
+      .lb-next  { right: 8px; }
+      .lb-btn   { width: 40px; height: 40px; font-size: 17px; }
     }
 
     /* ═══════════════════════════════════
@@ -278,9 +521,10 @@
     .divider {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin: 40px 0;
-      opacity: .35;
+      justify-content: center;
+      gap: var(--s-3);
+      margin: var(--s-6) auto;
+      max-width: 420px;
     }
 
     .divider::before, .divider::after {
@@ -294,10 +538,14 @@
       background: linear-gradient(to left, transparent, var(--gold));
     }
 
-    .divider-heart {
-      font-size: 16px;
-      color: var(--rose);
-      animation: heartbeat 1.6s ease-in-out infinite;
+    /* Un solo corazón late en toda la página (el de la firma).
+       Los separadores llevan un adorno quieto: menos ruido, más elegancia. */
+    .divider-mark {
+      font-size: 9px;
+      color: var(--gold);
+      opacity: .75;
+      letter-spacing: .5em;
+      text-indent: .5em;
     }
 
     @keyframes heartbeat {
@@ -312,43 +560,58 @@
        LOVE LETTER
     ═══════════════════════════════════ */
     .card {
-      background: rgba(17,22,58,.6);
-      border: 1px solid rgba(212,175,112,.18);
-      border-radius: 16px;
-      padding: 40px 36px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background:
+        linear-gradient(180deg, rgba(24,31,72,.62), rgba(14,19,48,.52));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: var(--s-5) clamp(22px, 5.5vw, 44px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       position: relative;
       overflow: hidden;
-      animation: fade-up .8s .8s ease both;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+      animation: fade-up .9s .8s var(--ease) both;
+    }
+
+    /* Filete de luz en el borde superior: el detalle que se nota sin verse */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 12%; right: 12%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--line-2), transparent);
     }
 
     .card::before {
       content: '❝';
       position: absolute;
-      top: 16px; left: 20px;
+      top: 10px; left: 18px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 80px;
-      color: rgba(212,175,112,.08);
+      font-size: 96px;
+      color: rgba(212,175,112,.07);
       line-height: 1;
       font-style: italic;
-    }
-
-    .card-eyebrow {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 12px;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-      opacity: .7;
+      pointer-events: none;
     }
 
     .card-body {
-      font-size: clamp(17px, 2.8vw, 20px);
-      line-height: 1.9;
-      color: rgba(253,240,244,.88);
+      font-size: clamp(16.5px, 2.6vw, 18.5px);
+      line-height: 1.85;
+      color: var(--text-2);
       font-weight: 400;
+      position: relative;
+    }
+
+    /* Capitular: arranca la carta como un libro */
+    .card-body > p:first-of-type::first-letter {
+      float: left;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.9em;
+      line-height: .82;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--gold2);
+      padding: .06em .12em 0 0;
     }
 
     .card-body em {
@@ -362,7 +625,16 @@
     }
 
     .card-body p + p {
-      margin-top: 1.4em;
+      margin-top: 1.35em;
+    }
+
+    /* El cierre de la carta, un poco aparte y más íntimo */
+    .card-body p:last-child {
+      margin-top: 1.7em;
+      padding-top: 1.4em;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-size: 1.02em;
     }
 
     /* ═══════════════════════════════════
@@ -424,6 +696,74 @@
       font-size: 15px;
       color: rgba(253,240,244,.65);
       line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════
+       NUESTRA CANCIÓN
+    ═══════════════════════════════════ */
+    .song {
+      margin: var(--s-5) 0;
+      text-align: center;
+      padding: var(--s-5) clamp(20px, 5vw, 40px);
+      background: linear-gradient(180deg, rgba(24,31,72,.5), rgba(14,19,48,.4));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      animation: fade-up .9s .9s var(--ease) both;
+    }
+
+    .song::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 18%; right: 18%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--line-2), transparent);
+    }
+
+    .song-label { margin-bottom: var(--s-3); }
+
+    .song-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(38px, 8vw, 54px);
+      color: var(--rose2);
+      line-height: 1.1;
+      margin-bottom: var(--s-1);
+    }
+
+    .song-artist {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: var(--s-4);
+    }
+
+    .song-player {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 34px rgba(0,0,0,.5);
+      border: 1px solid var(--line);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .song-player iframe {
+      display: block;
+      width: 100%;
+      border: 0;
+    }
+
+    .song-note {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-3);
+      line-height: 1.7;
+      max-width: 400px;
+      margin: var(--s-3) auto 0;
     }
 
     /* ═══════════════════════════════════
@@ -511,67 +851,100 @@
     ═══════════════════════════════════ */
     .verse-block {
       text-align: center;
-      padding: 36px 24px;
-      border-top: 1px solid rgba(212,175,112,.15);
-      border-bottom: 1px solid rgba(212,175,112,.15);
-      margin: 40px 0;
-      animation: fade-up .8s 1s ease both;
+      padding: var(--s-6) var(--s-3);
+      margin: var(--s-5) 0;
+      position: relative;
+      animation: fade-up .9s 1s var(--ease) both;
+    }
+
+    /* Comillas ornamentales en lugar de dos líneas duras */
+    .verse-block::before {
+      content: '❞';
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 46px;
+      line-height: 0;
+      color: var(--gold-dim);
+      opacity: .55;
+      margin-bottom: var(--s-4);
     }
 
     .verse-text {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
-      font-size: clamp(18px, 3.5vw, 26px);
+      font-size: clamp(19px, 3.6vw, 27px);
       color: var(--gold2);
-      line-height: 1.7;
-      max-width: 520px;
-      margin: 0 auto 16px;
+      line-height: 1.62;
+      max-width: 480px;
+      margin: 0 auto var(--s-3);
     }
 
     .verse-ref {
-      font-family: 'Lora', serif;
-      font-size: 13px;
-      letter-spacing: .18em;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: .3em;
       text-transform: uppercase;
-      color: var(--silver);
-      opacity: .65;
+      color: var(--text-3);
+    }
+
+    .verse-ref::before,
+    .verse-ref::after {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--line-2);
     }
 
     /* ═══════════════════════════════════
-       SIGNATURE
+       FIRMA
     ═══════════════════════════════════ */
     .signature {
       text-align: center;
-      padding: 40px 0 20px;
-      animation: fade-up .8s 1.1s ease both;
+      padding: var(--s-5) 0 var(--s-2);
+      animation: fade-up .9s 1.1s var(--ease) both;
     }
 
+    /* El único corazón que late en toda la página */
     .signature-heart {
-      font-size: 36px;
+      font-size: 22px;
       display: block;
-      margin-bottom: 16px;
-      animation: heartbeat 1.6s ease-in-out infinite;
+      color: var(--rose);
+      margin-bottom: var(--s-3);
+      animation: heartbeat 2.4s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%,100% { transform:scale(1); }
+      12%     { transform:scale(1.2); }
+      24%     { transform:scale(1); }
+      36%     { transform:scale(1.12); }
+      48%     { transform:scale(1); }
     }
 
     .signature-name {
       font-family: 'Great Vibes', cursive;
-      font-size: 52px;
-      color: var(--gold);
+      font-size: clamp(48px, 11vw, 62px);
+      color: transparent;
+      background: linear-gradient(160deg, #FBEAC4 0%, #D9B77E 48%, #A8834A 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
       display: block;
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .signature-nick {
       font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 16px;
-      color: var(--silver);
-      letter-spacing: .15em;
-      margin-top: 6px;
+      font-size: 11px;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-top: var(--s-2);
       display: block;
     }
 
-    /* Floating hearts */
+    /* Florecitas que suben — pocas, lentas y discretas */
     .floating-hearts {
       position: fixed;
       inset: 0;
@@ -583,14 +956,17 @@
     .fheart {
       position: absolute;
       bottom: -40px;
-      font-size: 18px;
+      font-size: 16px;
       opacity: 0;
+      will-change: transform, opacity;
       animation: float-heart linear infinite;
     }
 
     @keyframes float-heart {
-      0%   { transform:translateY(0) rotate(0deg); opacity:.6; }
-      100% { transform:translateY(-110vh) rotate(25deg); opacity:0; }
+      0%   { transform:translateY(0) rotate(0deg);      opacity:0;   }
+      12%  {                                             opacity:.42; }
+      88%  {                                             opacity:.3;  }
+      100% { transform:translateY(-108vh) rotate(22deg); opacity:0;   }
     }
 
     /* ═══════════════════════════════════
@@ -604,12 +980,13 @@
     /* ═══════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════ */
+    @media (max-width: 560px) {
+      .collage, .col { gap: 8px; }
+    }
+
     @media (max-width: 480px) {
       .card { padding: 28px 20px; }
       .reason-item { grid-template-columns: 42px 1fr; }
-      .polaroid { padding: 8px 8px 36px; }
-      .polaroid img { height: 220px; }
-      .polaroid-stage { height: 340px; }
       .thing { padding: 14px 12px; }
       .thing-name { font-size: 16px; }
       .thing-note { font-size: 12.5px; }
@@ -622,6 +999,17 @@
   </style>
 </head>
 <body>
+
+<noscript><style>body { opacity: 1 !important; }</style></noscript>
+<script>
+  /* Muestra la página cuando las tipografías estén listas.
+     El temporizador es la red de seguridad: nunca se queda en blanco. */
+  (function () {
+    var mostrar = function () { document.body.classList.add('ready'); };
+    setTimeout(mostrar, 1200);
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(mostrar);
+  })();
+</script>
 
 <!-- Stars background -->
 <canvas id="stars-canvas"></canvas>
@@ -636,32 +1024,61 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="big-number">4</div>
+    <span class="hero-mark">✦ ✦ ✦</span>
+    <span class="big-number">4</span>
     <p class="big-label">meses contigo, amor</p>
 
-    <!-- SVG Rose -->
-    <div class="rose-wrap">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Leaves -->
-        <ellipse cx="28" cy="72" rx="14" ry="7" fill="#2E5E3E" transform="rotate(-35 28 72)" opacity=".85"/>
-        <ellipse cx="72" cy="78" rx="12" ry="6" fill="#2E5E3E" transform="rotate(20 72 78)" opacity=".75"/>
-        <!-- Stem -->
-        <path d="M50 95 Q48 80 50 62" stroke="#2E5E3E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <!-- Petals outer -->
-        <ellipse cx="50" cy="44" rx="16" ry="12" fill="#C04060" opacity=".6" transform="rotate(-20 50 44)"/>
-        <ellipse cx="50" cy="44" rx="16" ry="12" fill="#C04060" opacity=".6" transform="rotate(20 50 44)"/>
-        <ellipse cx="50" cy="44" rx="14" ry="11" fill="#D45070" opacity=".7" transform="rotate(60 50 44)"/>
-        <ellipse cx="50" cy="44" rx="14" ry="11" fill="#D45070" opacity=".7" transform="rotate(-60 50 44)"/>
-        <ellipse cx="50" cy="44" rx="14" ry="10" fill="#E0607A" opacity=".75" transform="rotate(100 50 44)"/>
-        <ellipse cx="50" cy="44" rx="14" ry="10" fill="#E0607A" opacity=".75" transform="rotate(-100 50 44)"/>
-        <!-- Petals inner -->
-        <ellipse cx="50" cy="46" rx="11" ry="9" fill="#E8728F" opacity=".85" transform="rotate(0 50 46)"/>
-        <ellipse cx="50" cy="46" rx="10" ry="8" fill="#F09AAE" opacity=".8" transform="rotate(45 50 46)"/>
-        <ellipse cx="50" cy="46" rx="10" ry="8" fill="#F09AAE" opacity=".8" transform="rotate(-45 50 46)"/>
-        <!-- Center -->
-        <circle cx="50" cy="46" r="7" fill="#FF9AB0" opacity=".9"/>
-        <circle cx="50" cy="46" r="4" fill="#FFB8C8"/>
-        <circle cx="48" cy="44" r="1.5" fill="#fff" opacity=".6"/>
+    <!-- Ramito: un tulipán al centro y dos gerberas rosas -->
+    <div class="flores-wrap">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Un tulipán y dos gerberas rosas" role="img">
+        <defs>
+          <!-- Gerbera reutilizable (12 pétalos + botón) -->
+          <g id="gerbera">
+            <g fill="#F58AA8">
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(30)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(60)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(90)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(120)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(150)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(210)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(240)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(270)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(300)"/>
+              <ellipse cx="0" cy="-7.5" rx="2.3" ry="7.5" transform="rotate(330)"/>
+            </g>
+            <g fill="#FBB6CA" opacity=".95">
+              <ellipse cx="0" cy="-4.4" rx="1.5" ry="4.4" transform="rotate(15)"/>
+              <ellipse cx="0" cy="-4.4" rx="1.5" ry="4.4" transform="rotate(75)"/>
+              <ellipse cx="0" cy="-4.4" rx="1.5" ry="4.4" transform="rotate(135)"/>
+              <ellipse cx="0" cy="-4.4" rx="1.5" ry="4.4" transform="rotate(195)"/>
+              <ellipse cx="0" cy="-4.4" rx="1.5" ry="4.4" transform="rotate(255)"/>
+              <ellipse cx="0" cy="-4.4" rx="1.5" ry="4.4" transform="rotate(315)"/>
+            </g>
+            <circle r="3.1" fill="#FCDCE8"/>
+            <circle r="1.9" fill="#8A5230"/>
+          </g>
+        </defs>
+
+        <!-- Tallos -->
+        <path d="M50 95 Q32 84 23 60" stroke="#3E7A4E" stroke-width="1.9" fill="none" stroke-linecap="round"/>
+        <path d="M50 95 Q69 85 78 63" stroke="#3E7A4E" stroke-width="1.9" fill="none" stroke-linecap="round"/>
+        <path d="M50 96 Q49 76 50 54" stroke="#357044" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+
+        <!-- Hojas -->
+        <path d="M50 90 Q33 80 28 61 Q42 66 50 82 Z" fill="#3E7A4E" opacity=".92"/>
+        <path d="M50 85 Q67 76 72 58 Q58 63 50 78 Z" fill="#4C9160" opacity=".82"/>
+
+        <!-- Gerberas rosas -->
+        <use href="#gerbera" transform="translate(23,55) scale(.92) rotate(-8)"/>
+        <use href="#gerbera" transform="translate(78,58) scale(.86) rotate(10)"/>
+
+        <!-- Tulipán -->
+        <path d="M50 56 Q34 48 34 31 Q36 17 46 13 Q44 33 50 56 Z" fill="#D9536C"/>
+        <path d="M50 56 Q66 48 66 31 Q64 17 54 13 Q56 33 50 56 Z" fill="#E86A83"/>
+        <path d="M50 56 Q42 38 44 19 Q47 11 50 10 Q53 11 56 19 Q58 38 50 56 Z" fill="#F79BB0"/>
+        <ellipse cx="46.5" cy="24" rx="1.7" ry="5" fill="#fff" opacity=".32" transform="rotate(-8 46.5 24)"/>
       </svg>
     </div>
   </section>
@@ -669,62 +1086,48 @@
   <!-- NAMES -->
   <div class="names">
     <span class="from">Con todo mi amor, Vale Más ✦</span>
-    <span class="to">Para ti, Bonita 🌹</span>
+    <span class="to">Para ti, Bonita 🌷</span>
     <span class="date-line">11 · agosto · 2026</span>
   </div>
 
-  <div class="divider"><span class="divider-heart">♥</span></div>
+  <div class="divider"><span class="divider-mark">✦</span></div>
 
   <!-- ═══════════ PHOTO GALLERY ═══════════ -->
   <section class="gallery-section">
     <p class="gallery-label">✦ Nuestros recuerdos ✦</p>
+    <p class="gallery-hint">toca cualquier foto para verla en grande</p>
 
-    <div class="polaroid-stage" id="polaroid-stage">
-      <!-- Polaroids generated by JS -->
-    </div>
-
-    <div class="gallery-nav" id="gallery-dots"></div>
-
-    <div class="gallery-arrows">
-      <button class="gallery-btn" id="prev-btn" aria-label="Anterior">←</button>
-      <button class="gallery-btn" id="next-btn" aria-label="Siguiente">→</button>
+    <div class="collage" id="collage">
+      <!-- Las piezas del collage las genera el JS -->
     </div>
   </section>
 
-  <div class="divider"><span class="divider-heart">♥</span></div>
+  <div class="divider"><span class="divider-mark">✦</span></div>
 
   <!-- ═══════════ LOVE LETTER ═══════════ -->
   <div class="card">
-    <p class="card-eyebrow">✦ Una carta para ti</p>
+    <p class="card-eyebrow">✦ Para mi chaparrita</p>
     <div class="card-body">
       <p>
-        <em>Chaparrita chula</em>, hoy se cumplen <strong>cuatro meses</strong> desde que
-        me diste la oportunidad de estar a tu lado, y lo que más me sorprende
-        no son las cosas grandes — es lo chiquito. Es que un cafecito contigo
-        se me hace un plan entero. Que comer juntitos, aunque sea cualquier cosa,
-        sabe distinto. Que puedo estar horas nomás platicando contigo y se me va
-        el día sin sentirlo.
+        <em>Chaparrita chula</em>, hoy cumplimos <strong>cuatro meses</strong>. Y lo
+        que más me gusta de estar contigo no son las cosas grandes — es lo
+        chiquito: un cafecito, comer juntitos, quedarnos platicando hasta que
+        se nos va el día sin sentirlo.
       </p>
       <p>
-        Me gusta ir al cine contigo aunque la película esté regular. Me gusta
-        dar la vuelta sin rumbo, nomás por andar juntos. Me gusta cuando
-        metemos los piecitos en el canalito y el mundo se queda quieto un rato.
-        Ninguna de esas cosas suena a mucho si las cuento — pero contigo
-        <em>todas se sienten especiales</em>, y creo que ese es tu don:
-        vuelves bonito lo simple.
+        El cine aunque la peli esté regular. La vuelta sin rumbo. Los piecitos
+        en el canalito y el mundo quietecito un rato. Nada de eso suena a mucho,
+        pero contigo <em>todo se siente especial</em>. Ese es tu don: haces
+        bonito lo simple.
       </p>
       <p>
-        Y es por tu forma de ser. Eres <strong>linda y dulce</strong> hasta en los
-        detalles más pequeños, en cómo hablas, en cómo cuidas, en cómo te
-        emocionas por cosas chiquitas. A tu lado no necesito nada más ni ningún
-        lugar especial: el lugar eres tú.
+        Y es por tu forma de ser, tan <strong>linda y dulce</strong>. A tu lado no
+        necesito nada más ni ningún lugar bonito — el lugar eres tú.
       </p>
       <p>
-        Gracias por tu paciencia, por tu dulzura y por elegirme cada mañana.
-        No soy el hombre perfecto, pero con el Señor de mi lado y contigo junto
-        a mí, quiero ser el mejor hombre que puedo ser — para ti, para nosotros.
-        Y quiero seguir haciendo todo esto contigo: los cafecitos, las pláticas,
-        las vueltas, los canalitos, la vida entera.
+        Gracias por elegirme cada mañana. Con el Señor de mi lado y contigo
+        junto a mí, quiero seguir haciendo todo esto: los cafecitos, las
+        pláticas, las vueltas, la vida entera.
       </p>
       <p>
         <em>Te quiero hoy, mañana y todos los días que Dios me dé vida para quererte.</em>
@@ -732,9 +1135,37 @@
     </div>
   </div>
 
-  <div class="divider"><span class="divider-heart">♥</span></div>
+  <div class="divider"><span class="divider-mark">✦</span></div>
 
-  <!-- ═══════════ 4 REASONS ═══════════ -->
+  <!-- ═══════════ NUESTRA CANCIÓN ═══════════ -->
+  <section class="song">
+    <p class="song-label">✦ Nuestra canción ✦</p>
+    <h2 class="song-title">Beso</h2>
+    <p class="song-artist">Jósean Log</p>
+
+    <div class="song-player">
+      <iframe
+        src="https://open.spotify.com/embed/track/4PpuZIMmeng6qPicveSI22?utm_source=generator&amp;theme=0"
+        height="152"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        title="Beso — Jósean Log en Spotify"></iframe>
+    </div>
+
+    <p class="song-note">
+      Dale play, chaparrita. Esta me acuerda a ti. ♥
+    </p>
+  </section>
+
+  <div class="divider"><span class="divider-mark">✦</span></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECCIONES DESACTIVADAS (por si las quieres de vuelta:
+       nomás quita esta línea de comentario y la del final)
+       · 4 razones por las que eres increíble
+       · Nuestras cositas favoritas
+  ═══════════════════════════════════════════════════════ -->
+  <!--
   <section class="reasons">
     <h2 class="reasons-title">4 razones por las que eres increíble</h2>
     <div class="reason-list">
@@ -790,9 +1221,8 @@
     </div>
   </section>
 
-  <div class="divider"><span class="divider-heart">♥</span></div>
+  <div class="divider"><span class="divider-mark">✦</span></div>
 
-  <!-- ═══════════ NUESTRAS COSITAS ═══════════ -->
   <section class="things">
     <h2 class="things-title">Nuestras cositas favoritas</h2>
     <p class="things-sub">
@@ -841,8 +1271,8 @@
 
     <p class="things-closing">…y todo lo que nos falta por vivir ♥</p>
   </section>
-
-  <div class="divider"><span class="divider-heart">♥</span></div>
+  -->
+  <!-- ═══════ FIN DE SECCIONES DESACTIVADAS ═══════ -->
 
   <!-- ═══════════ VERSE ═══════════ -->
   <div class="verse-block">
@@ -863,6 +1293,21 @@
 
 </main>
 
+<!-- ═══════════════════════════════════
+     VISOR GRANDE (POLAROID)
+═══════════════════════════════════ -->
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto en grande">
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Cerrar">✕</button>
+  <button class="lb-btn lb-prev"  id="lb-prev"  aria-label="Foto anterior">←</button>
+  <button class="lb-btn lb-next"  id="lb-next"  aria-label="Foto siguiente">→</button>
+
+  <figure class="lb-frame" id="lb-frame">
+    <img id="lb-img" src="" alt=""/>
+    <figcaption class="lb-cap"   id="lb-cap"></figcaption>
+    <div        class="lb-count" id="lb-count"></div>
+  </figure>
+</div>
+
 
 <!-- ═══════════════════════════════════
      JAVASCRIPT
@@ -876,110 +1321,201 @@
    Edita este array con los nombres de archivo
    y los pies de foto que quieras mostrar.
    ─────────────────────────────────────────── */
+/* w/h son las medidas reales de cada foto. Sirven para reservar su espacio
+   antes de que carguen (nada brinca al abrir) y para repartirlas en columnas parejas. */
 const PHOTOS = [
-  { src: 'fotos/1.jpg', caption: 'Tú y yo 🌹' },
-  { src: 'fotos/PHOTO-2026-05-03-08-30-38.jpg', caption: 'Un cafecito contigo ☕' },
-  { src: 'fotos/PHOTO-2026-05-17-19-42-10.jpg', caption: 'Comer juntitos 🍽️' },
-  { src: 'fotos/PHOTO-2026-05-17-19-49-36_1.jpg', caption: 'Puras pláticas 💬' },
-  { src: 'fotos/PHOTO-2026-05-17-19-49-36_2.jpg', caption: 'Mi chaparrita chula' },
-  { src: 'fotos/PHOTO-2026-05-17-19-49-36_3.jpg', caption: 'Esa sonrisa tuya' },
-  { src: 'fotos/PHOTO-2026-05-17-19-49-36_4.jpg', caption: 'Lo simple contigo ♥' },
-  { src: 'fotos/PHOTO-2026-05-17-19-49-37.jpg', caption: 'Dando la vuelta, sin rumbo' },
-  { src: 'fotos/PHOTO-2026-05-17-19-53-18.jpg', caption: 'Contigo todo es especial' },
-  { src: 'fotos/PHOTO-2026-05-17-20-04-52.jpg', caption: 'Los piecitos en el canalito 💧' },
-  { src: 'fotos/PHOTO-2026-05-17-20-04-52_1.jpg', caption: 'El mundo quietecito' },
-  { src: 'fotos/PHOTO-2026-05-17-20-06-39.jpg', caption: 'Nomás por andar juntos' },
-  { src: 'fotos/PHOTO-2026-05-24-03-34-17.jpg', caption: 'Mis favoritos ✦' },
-  { src: 'fotos/PHOTO-2026-05-24-07-53-09.jpg', caption: 'Tú y yo otra vez' },
-  { src: 'fotos/IMG_1102.jpeg', caption: 'Para recordarlo siempre' },
-  { src: 'fotos/2dd2b2b9-e794-4cb6-a8d5-0ee43b3026ea.JPG', caption: 'Mi lugar favorito eres tú' },
-  { src: 'fotos/42f209a6-a00d-4a57-b8d5-e186c4873369.JPG', caption: 'Momentitos nuestros' },
-  { src: 'fotos/50ad2836-b701-48bf-a500-5262282d22ba.JPG', caption: 'Tu forma de ser tan linda' },
-  { src: 'fotos/b4aba6b9-2e2c-4576-82a5-646ffb01e8f8_EAF3E606-451B-4ADA-8DD5-D528E7FAAA7A.JPG', caption: 'Cuatro meses contigo' },
-  { src: 'fotos/ccea88ef-bcc0-4c7b-b191-f910077df37c.JPG', caption: 'Y los que faltan ♥' },
-  { src: 'fotos/f3e0f256-f29b-47e7-abdb-f23dfe22f1cb.JPG', caption: 'Te quiero, Bonita 🌹' },
+  { src: '01-white-sands.jpg',        w: 1050, h: 1400,  caption: 'Las dunas blancas contigo 🤍' },
+  { src: '02-canalito.jpg',           w: 1050, h: 1400, caption: 'Los piecitos en el canalito 💧' },
+  { src: '23-cine.jpg',               w: 1050, h: 1400,   caption: 'Nuestra función en el cine 🍿' },
+  { src: '03-manitas.jpg',            w: 1050, h: 1400, caption: 'Tomaditos de la mano ♥' },
+  { src: '04-cena-michelada.jpg',     w: 1400, h: 1050,   caption: 'Comer juntitos, mi plan favorito' },
+  { src: '22-bebidas.jpg',            w: 1050, h: 1400,   caption: 'Tu bebida rosita y mi Modelo 🍻' },
+  { src: '05-beso-carro.jpg',         w: 1400, h: 1050, caption: 'Un besito de camino a casa' },
+  { src: '06-plaza-lagartos-beso.jpg',w: 1400, h: 1050,   caption: 'Un besito en la plaza' },
+  { src: '07-plaza-lagartos.jpg',     w: 1400, h: 1050,   caption: 'Los lagartos y nosotros dos' },
+  { src: '09-cerro-risa.jpg',         w: 1050, h: 1400, caption: 'Tirando estilo en el cerro en el chuco' },
+  { src: '10-cerro-vista.jpg',        w: 1400, h: 1050,   caption: 'Hasta arriba del cerro, contigo' },
+  { src: '11-cerro-abrazados.jpg',    w:  896, h: 1108,   caption: 'Abrazaditos viendo el cielo' },
+  { src: '12-mirador.jpg',            w: 1400, h: 1050, caption: 'Dando la vuelta, sin rumbo' },
+  { src: '14-white-sands-los-dos.jpg',w: 1400, h:  630, caption: 'Tú y yo en la arena blanca' },
+  { src: '15-noche-bufanda.jpg',      w: 1081, h: 1400, caption: 'De noche y bien abrazaditos' },
+  { src: '16-feria-noche.jpg',        w: 1050, h: 1400,   caption: 'Nuestra noche de feria 🎡' },
+  { src: '17-feria-minnie.jpg',       w: 1400, h: 1050,   caption: 'Tu Minnie y tú 🎀' },
+  { src: '24-circo.jpg',              w: 1050, h: 1400,   caption: 'Las luces del circo 🎪' },
+  { src: '18-tienda-espejo.jpg',      w: 1050, h: 1400,  caption: 'Hasta ir de compras contigo es bonito' },
+  { src: '19-beso-frente.jpg',        w:  679, h:  819, caption: 'Un besito en la frente ♥' },
+  { src: '20-carro-vestido-azul.jpg', w: 1400, h: 1050,   caption: 'Listos para la vuelta 🚗' },
+  { src: '21-carro-jugando.jpg',      w: 1400, h: 1050, caption: 'Así de payasos, así de felices 😝' },
 ];
 
-/* Rotaciones de polaroid (alterna para efecto natural) */
-const ROTS = ['-2deg', '1.5deg', '-1.2deg', '2.3deg', '-1.8deg'];
+/* Las versiones ligeras viven en fotos/web/ (los originales quedan intactos en fotos/) */
+const FOTO_DIR = 'fotos/web/';
 
-/* ─── Build polaroids ─── */
-const stage  = document.getElementById('polaroid-stage');
-const dotsEl = document.getElementById('gallery-dots');
+/* ─────────────────────────────────────────
+   ARMAR EL COLLAGE
+   ─────────────────────────────────────────*/
+const collage = document.getElementById('collage');
 
-PHOTOS.forEach((p, i) => {
-  /* Polaroid */
-  const div = document.createElement('div');
-  div.className = 'polaroid' + (i === 0 ? ' active' : '');
-  div.style.setProperty('--rot', ROTS[i % ROTS.length]);
+/* Cada foto se arma una sola vez y luego se reacomoda entre columnas */
+const TILES = PHOTOS.map((p, i) => {
+  const tile = document.createElement('button');
+  tile.className = 'tile';
+  tile.type = 'button';
+  tile.setAttribute('aria-label', `Ver en grande: ${p.caption}`);
 
   const img = document.createElement('img');
-  img.src = p.src;
+  img.src = FOTO_DIR + p.src;
   img.alt = p.caption;
+  img.width  = p.w;          /* reserva el espacio: la página no brinca */
+  img.height = p.h;
   img.decoding = 'async';
-  if (i > 0) img.loading = 'lazy';
+  if (i > 3) img.loading = 'lazy';
+  /* Cada foto respira con su propio ritmo, no todas a la vez */
+  img.style.animationDelay    = (-i * 2.3).toFixed(1) + 's';
+  img.style.animationDuration = (24 + (i % 5) * 3) + 's';
+
   img.onerror = () => {
-    /* Fallback gradient when image not found */
-    img.style.display = 'none';
-    const fb = document.createElement('div');
-    fb.style.cssText = `
-      width:100%; height:280px;
-      background:linear-gradient(135deg,#1A2456 0%,#2E1A3A 50%,#3A1428 100%);
-      display:flex; align-items:center; justify-content:center;
-      flex-direction:column; gap:12px;
-    `;
-    fb.innerHTML = `
-      <span style="font-size:48px">🌹</span>
-      <span style="font-family:'Great Vibes',cursive;font-size:20px;color:rgba(255,255,255,.5);text-align:center;padding:0 16px">${p.caption}</span>
-    `;
-    div.insertBefore(fb, div.firstChild);
+    img.remove();
+    tile.style.cssText += 'background:linear-gradient(135deg,#1A2456,#2E1A3A 50%,#3A1428);aspect-ratio:' + p.w + '/' + p.h;
+    tile.insertAdjacentHTML('afterbegin',
+      '<span style="position:absolute;inset:0;display:flex;align-items:center;' +
+      'justify-content:center;font-size:34px">🌷</span>');
   };
 
-  const cap = document.createElement('div');
-  cap.className = 'caption';
+  const cap = document.createElement('span');
+  cap.className = 'tile-cap';
   cap.textContent = p.caption;
 
-  div.appendChild(img);
-  div.appendChild(cap);
-  stage.appendChild(div);
-
-  /* Dot */
-  const dot = document.createElement('button');
-  dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
-  dot.setAttribute('aria-label', `Foto ${i + 1}`);
-  dot.addEventListener('click', () => goTo(i));
-  dotsEl.appendChild(dot);
+  tile.append(img, cap);
+  tile.addEventListener('click', () => openLightbox(i));
+  return tile;
 });
 
-/* ─── Slideshow logic ─── */
-let current = 0;
-let timer;
-
-function goTo(idx) {
-  const slides = document.querySelectorAll('.polaroid');
-  const dots   = document.querySelectorAll('.gallery-dot');
-
-  slides[current].classList.remove('active');
-  dots[current].classList.remove('active');
-
-  current = (idx + PHOTOS.length) % PHOTOS.length;
-
-  slides[current].classList.add('active');
-  dots[current].classList.add('active');
-
-  resetTimer();
+/* ─── Reparto en columnas ───
+   Cada foto se va a la columna que lleva menos alto acumulado. Así las
+   columnas terminan parejas y no queda ningún hueco al final. */
+function columnasSegunAncho() {
+  const a = window.innerWidth;
+  return a < 560 ? 2 : a < 900 ? 3 : 4;
 }
 
-function resetTimer() {
-  clearInterval(timer);
-  timer = setInterval(() => goTo(current + 1), 4500);
+let columnasActuales = 0;
+
+function acomodar() {
+  const n = columnasSegunAncho();
+  if (n === columnasActuales) return;
+  columnasActuales = n;
+
+  collage.textContent = '';
+  const cols   = [];
+  const altos  = new Array(n).fill(0);
+
+  for (let i = 0; i < n; i++) {
+    const c = document.createElement('div');
+    c.className = 'col';
+    collage.appendChild(c);
+    cols.push(c);
+  }
+
+  TILES.forEach((tile, i) => {
+    const menor = altos.indexOf(Math.min(...altos));
+    cols[menor].appendChild(tile);
+    /* alto relativo = proporción de la foto (ancho de columna = 1) */
+    altos[menor] += PHOTOS[i].h / PHOTOS[i].w;
+  });
+
+  observar();
 }
 
-document.getElementById('prev-btn').addEventListener('click', () => goTo(current - 1));
-document.getElementById('next-btn').addEventListener('click', () => goTo(current + 1));
+/* ─── Aparecen poco a poco al hacer scroll ─── */
+let io;
 
-/* Only start auto-play if more than one photo */
-if (PHOTOS.length > 1) resetTimer();
+function observar() {
+  if (!('IntersectionObserver' in window)) {
+    TILES.forEach(t => t.classList.add('in'));
+    return;
+  }
+  if (io) io.disconnect();
+  let mostradas = 0;
+  io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      /* escalonado: cada pieza entra un pelín después que la anterior */
+      setTimeout(() => entry.target.classList.add('in'), (mostradas++ % 8) * 85);
+      obs.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: .05 });
+  TILES.forEach(t => { if (!t.classList.contains('in')) io.observe(t); });
+}
+
+acomodar();
+
+let reacomodo;
+window.addEventListener('resize', () => {
+  clearTimeout(reacomodo);
+  reacomodo = setTimeout(acomodar, 160);
+});
+
+
+/* ─────────────────────────────────────────
+   VISOR GRANDE
+   ─────────────────────────────────────────*/
+const lb      = document.getElementById('lightbox');
+const lbImg   = document.getElementById('lb-img');
+const lbCap   = document.getElementById('lb-cap');
+const lbCount = document.getElementById('lb-count');
+const lbFrame = document.getElementById('lb-frame');
+let lbIndex = 0;
+
+function showPhoto(i) {
+  lbIndex = (i + PHOTOS.length) % PHOTOS.length;
+  const p = PHOTOS[lbIndex];
+  lbImg.src        = FOTO_DIR + p.src;
+  lbImg.alt        = p.caption;
+  lbCap.textContent   = p.caption;
+  lbCount.textContent = `${lbIndex + 1} / ${PHOTOS.length}`;
+  /* Reinicia la animación del marco en cada cambio */
+  lbFrame.style.animation = 'none';
+  void lbFrame.offsetWidth;
+  lbFrame.style.animation = '';
+}
+
+function openLightbox(i) {
+  showPhoto(i);
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('lb-close').focus();
+}
+
+function closeLightbox() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click',  () => showPhoto(lbIndex - 1));
+document.getElementById('lb-next').addEventListener('click',  () => showPhoto(lbIndex + 1));
+
+/* Clic en el fondo cierra; clic en la foto no */
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+/* Teclado: ← → y Esc */
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowLeft')  showPhoto(lbIndex - 1);
+  if (e.key === 'ArrowRight') showPhoto(lbIndex + 1);
+});
+
+/* Deslizar con el dedo en el celular */
+let touchX = null;
+lb.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+lb.addEventListener('touchend', e => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) showPhoto(lbIndex + (dx < 0 ? 1 : -1));
+  touchX = null;
+}, { passive: true });
 
 
 /* ─────────────────────────────────────────
@@ -995,15 +1531,21 @@ if (PHOTOS.length > 1) resetTimer();
     H = canvas.height = window.innerHeight;
   }
 
+  /* Densidad según el tamaño de pantalla, no un número fijo */
+  const cuantas = () => Math.round(Math.min(190, (W * H) / 9000));
+
   function createStars(n) {
     stars = [];
     for (let i = 0; i < n; i++) {
+      /* Unas pocas estrellas son rosadas: liga el cielo con los tulipanes */
+      const rosada = Math.random() < .16;
       stars.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        r: Math.random() * 1.4 + 0.2,
+        r: Math.random() * 1.25 + 0.25,
         a: Math.random(),
-        da: (Math.random() - 0.5) * 0.008
+        da: (Math.random() - 0.5) * 0.005,   /* parpadeo más lento */
+        c: rosada ? '226,104,127' : '212,175,112'
       });
     }
   }
@@ -1012,19 +1554,25 @@ if (PHOTOS.length > 1) resetTimer();
     ctx.clearRect(0, 0, W, H);
     stars.forEach(s => {
       s.a += s.da;
-      if (s.a <= 0 || s.a >= 1) s.da *= -1;
+      if (s.a <= 0.05 || s.a >= 1) s.da *= -1;
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(212,175,112,${s.a * 0.7})`;
+      ctx.fillStyle = `rgba(${s.c},${s.a * 0.62})`;
       ctx.fill();
     });
     requestAnimationFrame(draw);
   }
 
   resize();
-  createStars(160);
+  createStars(cuantas());
   draw();
-  window.addEventListener('resize', () => { resize(); createStars(160); });
+
+  /* No recalcular en cada píxel del redimensionado */
+  let t;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    t = setTimeout(() => { resize(); createStars(cuantas()); }, 180);
+  });
 })();
 
 
@@ -1033,25 +1581,28 @@ if (PHOTOS.length > 1) resetTimer();
    ─────────────────────────────────────────*/
 (function() {
   const container = document.getElementById('floating-hearts');
-  const emojis = ['♥', '🌹', '♥', '✦', '♥'];
+  const emojis = ['♥', '🌷', '♥', '🌸', '✦', '🌷', '♥'];
+
+  /* Si la persona pidió menos animación en su sistema, no soltamos ninguna */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   function spawnHeart() {
     const el = document.createElement('span');
     el.className = 'fheart';
     el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    el.style.left   = Math.random() * 100 + 'vw';
-    el.style.fontSize = (Math.random() * 14 + 10) + 'px';
-    el.style.color  = Math.random() > .5 ? '#E2687F' : '#D4AF70';
-    const dur = Math.random() * 8 + 10;
-    el.style.animationDuration  = dur + 's';
-    el.style.animationDelay     = Math.random() * 4 + 's';
+    el.style.left     = Math.random() * 100 + 'vw';
+    el.style.fontSize = (Math.random() * 9 + 11) + 'px';
+    el.style.color    = Math.random() > .5 ? '#E2687F' : '#D4AF70';
+    const dur = Math.random() * 10 + 16;   /* más lentas: flotan, no vuelan */
+    el.style.animationDuration = dur + 's';
     container.appendChild(el);
-    setTimeout(() => el.remove(), (dur + 4) * 1000);
+    setTimeout(() => el.remove(), dur * 1000 + 500);
   }
 
-  /* Spawn gently */
-  setInterval(spawnHeart, 2200);
-  spawnHeart();
+  /* Pocas y espaciadas: se sienten, no distraen */
+  setInterval(spawnHeart, 5200);
+  setTimeout(spawnHeart, 900);
+  setTimeout(spawnHeart, 3000);
 })();
 </script>
 
